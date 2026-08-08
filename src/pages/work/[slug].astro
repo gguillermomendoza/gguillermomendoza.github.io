@@ -18,6 +18,7 @@ const pageTitle = `${project.title} — Guillermo Mendoza`;
     <div class="page">
       <a class="link back-link" href="/#work">&larr; Selected Work</a>
 
+      <p class="path-tag">/work/{project.slug}/</p>
       <p class="eyebrow">{project.index}</p>
       <h1>{project.title}</h1>
       <p class="project-problem">{project.problem}</p>
@@ -43,10 +44,10 @@ const pageTitle = `${project.title} — Guillermo Mendoza`;
 
       {project.images && project.images.length > 0 && (
         <div class="project-images">
-          {project.images.map((image) => (
+          {project.images.map((image, i) => (
             <figure>
               <img src={image.src} alt={image.alt} loading="lazy" width="960" height="540" />
-              <figcaption>{image.alt}</figcaption>
+              <figcaption>fig. {i + 1} &mdash; {image.alt}</figcaption>
             </figure>
           ))}
         </div>
@@ -54,26 +55,31 @@ const pageTitle = `${project.title} — Guillermo Mendoza`;
 
       <div class="project-sections">
         <section>
+          <p class="dotted-rule"><span class="dotted-rule-label">01</span></p>
           <h2>Overview</h2>
           <p>{project.detail.overview}</p>
         </section>
 
         <section>
+          <p class="dotted-rule"><span class="dotted-rule-label">02</span></p>
           <h2>Problem</h2>
           <p>{project.detail.problem}</p>
         </section>
 
         <section>
+          <p class="dotted-rule"><span class="dotted-rule-label">03</span></p>
           <h2>Approach</h2>
           <p>{project.detail.approach}</p>
         </section>
 
         <section>
+          <p class="dotted-rule"><span class="dotted-rule-label">04</span></p>
           <h2>Technical Implementation</h2>
           <p>{project.detail.implementation}</p>
         </section>
 
         <section>
+          <p class="dotted-rule"><span class="dotted-rule-label">05</span></p>
           <h2>Evaluation &amp; Results</h2>
           <p>{project.detail.evaluation}</p>
           {project.stat && (
@@ -85,12 +91,13 @@ const pageTitle = `${project.title} — Guillermo Mendoza`;
         </section>
 
         <section>
+          <p class="dotted-rule"><span class="dotted-rule-label">06</span></p>
           <h2>What I Learned</h2>
           <p>{project.detail.learned}</p>
         </section>
       </div>
 
-      <a class="link" href={project.github} target="_blank" rel="noopener noreferrer">View repository on GitHub &rarr;</a>
+      <a class="link" href={project.github} target="_blank" rel="noopener noreferrer">View repository on GitHub</a>
     </div>
   </article>
 </BaseLayout>
@@ -106,9 +113,13 @@ const pageTitle = `${project.title} — Guillermo Mendoza`;
     font-size: 0.9rem;
   }
 
+  .project > .page > .path-tag {
+    margin: 0 0 0.3rem;
+  }
+
   .project-problem {
-    font-family: var(--font-serif);
-    font-size: 1.25rem;
+    font-weight: 500;
+    font-size: 1.2rem;
     color: var(--color-text-muted);
   }
 
@@ -166,22 +177,18 @@ const pageTitle = `${project.title} — Guillermo Mendoza`;
   }
 
   .project-images figcaption {
-    font-size: 0.85rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
     color: var(--color-text-muted);
     margin-top: 0.4rem;
   }
 
   .project-sections section {
-    border-bottom: 1px solid var(--color-border);
-    padding: var(--space-4) 0;
+    padding: var(--space-3) 0 var(--space-4);
   }
 
-  .project-sections section:first-child {
-    padding-top: 0;
-  }
-
-  .project-sections section:last-child {
-    border-bottom: none;
+  .project-sections section:first-child .dotted-rule {
+    margin-top: 0;
   }
 
   .project-sections h2 {

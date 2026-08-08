@@ -4,9 +4,24 @@ import { hero, site } from '../data/site';
 
 <section class="hero">
   <div class="page">
-    <p class="eyebrow">{hero.eyebrow}</p>
+    <p class="eyebrow">whoami</p>
     <h1>{hero.headline}</h1>
     <p class="hero-description">{hero.description}</p>
+
+    <dl class="hero-meta">
+      <div>
+        <dt>role</dt>
+        <dd>data science &middot; ML &middot; applied AI</dd>
+      </div>
+      <div>
+        <dt>status</dt>
+        <dd>open to full-time roles, 2026</dd>
+      </div>
+      <div>
+        <dt>education</dt>
+        <dd>Pitzer College &mdash; class of 2026</dd>
+      </div>
+    </dl>
 
     <div class="hero-links">
       <a class="btn" href="#work">Selected Work</a>
@@ -26,6 +41,30 @@ import { hero, site } from '../data/site';
     font-size: 1.15rem;
     color: var(--color-text-muted);
     max-width: var(--measure);
+  }
+
+  .hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    margin: var(--space-4) 0 0;
+    padding: var(--space-2) 0;
+    border-top: 1px dotted var(--color-border);
+    border-bottom: 1px dotted var(--color-border);
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+  }
+
+  .hero-meta dt {
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 0.7rem;
+  }
+
+  .hero-meta dd {
+    margin: 0.15em 0 0;
+    color: var(--color-text);
   }
 
   .hero-links {

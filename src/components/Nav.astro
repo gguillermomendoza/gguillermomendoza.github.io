@@ -20,10 +20,10 @@ const navLinks = [
     <nav id="nav-menu" class="nav-menu" aria-label="Primary">
       <ul>
         {navLinks.map((link) => (
-          <li><a class="link" href={link.href}>{link.label}</a></li>
+          <li><a class="nav-link" href={link.href}>{link.label}</a></li>
         ))}
-        <li><a class="link" href={site.resumeHref} target="_blank" rel="noopener noreferrer">Résumé</a></li>
-        <li><a class="link" href={site.github} target="_blank" rel="noopener noreferrer">GitHub</a></li>
+        <li><a class="nav-link" href={site.resumeHref} target="_blank" rel="noopener noreferrer">Résumé</a></li>
+        <li><a class="nav-link" href={site.github} target="_blank" rel="noopener noreferrer">GitHub</a></li>
       </ul>
     </nav>
   </div>
@@ -48,9 +48,9 @@ const navLinks = [
   }
 
   .wordmark {
-    font-family: var(--font-serif);
-    font-weight: 600;
-    font-size: 1.05rem;
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-size: 1rem;
     text-decoration: none;
     color: var(--color-text);
   }
@@ -66,6 +66,28 @@ const navLinks = [
   .nav-menu a {
     text-decoration: none;
     font-size: 0.95rem;
+  }
+
+  .nav-link {
+    position: relative;
+    color: var(--color-text);
+    padding-bottom: 2px;
+  }
+
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 100%;
+    bottom: 0;
+    height: 1px;
+    background: var(--color-accent);
+  }
+
+  .nav-link:hover::after,
+  .nav-link:focus-visible::after {
+    right: 0;
+    transition: right 80ms steps(3);
   }
 
   .nav-toggle {

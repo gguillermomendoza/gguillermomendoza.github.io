@@ -19,7 +19,7 @@ export const experience: ExperienceEntry[] = [
     role: 'Research Assistant / Lab Manager',
     org: 'Sheung Lab',
     summary:
-      'Owned day-to-day lab operations alongside data collection and analysis, balancing experimental work with the logistics that keep a lab running.',
+      'Day-to-day lab operations alongside data collection and analysis, balancing experimental work with the logistics that keep a lab running.',
   },
   {
     role: 'AI Marketing Strategy Consultant / Project Manager',
@@ -29,13 +29,13 @@ export const experience: ExperienceEntry[] = [
   },
   {
     role: 'Portal & Form Developer',
-    org: 'Independent contract',
+    org: 'Pitzer College',
     summary:
       'Built and maintained internal tooling and forms, working directly with the people who used them to figure out what the tool actually needed to do.',
   },
   {
     role: 'Computer Science & Machine Learning Tutor',
-    org: 'Independent',
+    org: 'Pitzer College',
     summary:
       'Taught programming and ML concepts one-on-one, adapting explanations of the same idea to students with very different backgrounds.',
   },

@@ -1,0 +1,61 @@
+---
+// Instrument-style custom cursor: default reticle, VIEW over project cards,
+// ↗ over external links, INSPECT over the signal-strip readout.
+// Gated to fine pointers; native cursor stays put on touch and under
+// prefers-reduced-motion. Keyboard focus-visible states are unaffected.
+---
+
+<div class="cursor" id="cursor" data-state="default" aria-hidden="true">
+  <span class="cursor-reticle"><span class="cursor-dot"></span></span>
+  <span class="cursor-tag" id="cursor-tag"></span>
+  <span class="cursor-arrow">&#8599;</span>
+</div>
+
+<script>
+  const canHover =
+    window.matchMedia('(pointer: fine)').matches &&
+    window.matchMedia('(prefers-reduced-motion: no-preference)').matches;
+
+  if (canHover) {
+    document.documentElement.classList.add('has-custom-cursor');
+
+    const cursor = document.getElementById('cursor');
+    const tag = document.getElementById('cursor-tag');
+    let x = 0;
+    let y = 0;
+    let raf = 0;
+
+    const render = () => {
+      if (cursor) cursor.style.transform = `translate(${x}px, ${y}px)`;
+      raf = 0;
+    };
+
+    window.addEventListener('mousemove', (event) => {
+      x = event.clientX;
+      y = event.clientY;
+      if (!raf) raf = requestAnimationFrame(render);
+    });
+
+    document.querySelectorAll<HTMLAnchorElement>('a[target="_blank"]').forEach((el) => {
+      if (!el.dataset.cursor) el.dataset.cursor = 'link';
+    });
+
+    const targets = document.querySelectorAll<HTMLElement>('[data-cursor]');
+
+    targets.forEach((el) => {
+      const state = el.dataset.cursor || 'default';
+      const label = el.dataset.cursorLabel || '';
+
+      el.addEventListener('mouseenter', () => {
+        cursor?.setAttribute('data-state', state);
+        if (tag) tag.textContent = label;
+        el.classList.add('is-cursor-hover');
+      });
+
+      el.addEventListener('mouseleave', () => {
+        cursor?.setAttribute('data-state', 'default');
+        el.classList.remove('is-cursor-hover');
+      });
+    });
+  }
+</script>

@@ -2,7 +2,7 @@
 // Editing this file is the single place to update contact info or hero/about copy.
 
 export const site = {
-  name: 'Guillermo Mendoza',
+  name: 'Guillermo Mendoza o(*￣▽￣*)ブ',
   fullName: 'Guillermo A. Mendoza Franco',
   title: 'Guillermo Mendoza — Data Science, ML, & Applied AI', 
   description:
