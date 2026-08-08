@@ -1,0 +1,58 @@
+---
+import { experience } from '../data/experience';
+---
+
+<section id="experience">
+  <div class="page">
+    <div class="section-heading">
+      <h2>Experience &amp; Research</h2>
+    </div>
+
+    <ul class="experience-list">
+      {experience.map((entry) => (
+        <li class="experience-item">
+          <h3>{entry.role} <span class="experience-org">&mdash; {entry.org}</span></h3>
+          <p>{entry.summary}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .experience-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .experience-item {
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .experience-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .experience-item h3 {
+    font-size: 1.05rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .experience-org {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+  }
+
+  .experience-item p {
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+</style>

@@ -1,0 +1,37 @@
+---
+import { hero, site } from '../data/site';
+---
+
+<section class="hero">
+  <div class="page">
+    <p class="eyebrow">{hero.eyebrow}</p>
+    <h1>{hero.headline}</h1>
+    <p class="hero-description">{hero.description}</p>
+
+    <div class="hero-links">
+      <a class="btn" href="#work">Selected Work</a>
+      <a class="btn btn-quiet" href={site.resumeHref} target="_blank" rel="noopener noreferrer">Résumé</a>
+      <a class="btn btn-quiet" href={site.github} target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a class="btn btn-quiet" href={site.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding-top: var(--space-6);
+  }
+
+  .hero-description {
+    font-size: 1.15rem;
+    color: var(--color-text-muted);
+    max-width: var(--measure);
+  }
+
+  .hero-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+  }
+</style>

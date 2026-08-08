@@ -1,0 +1,190 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { projects } from '../../data/projects';
+
+export function getStaticPaths() {
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const pageTitle = `${project.title} — Guillermo Mendoza`;
+---
+
+<BaseLayout title={pageTitle} description={project.problem}>
+  <article class="project">
+    <div class="page">
+      <a class="link back-link" href="/#work">&larr; Selected Work</a>
+
+      <p class="eyebrow">{project.index}</p>
+      <h1>{project.title}</h1>
+      <p class="project-problem">{project.problem}</p>
+
+      <ul class="tech-list">
+        {project.tech.map((t) => <li>{t}</li>)}
+      </ul>
+
+      <div class="project-links">
+        <a class="btn" href={project.github} target="_blank" rel="noopener noreferrer">View repository</a>
+        {project.relatedGithub && (
+          <a class="btn btn-quiet" href={project.relatedGithub.href} target="_blank" rel="noopener noreferrer">
+            {project.relatedGithub.label}
+          </a>
+        )}
+      </div>
+
+      {project.pipeline && project.pipeline.length > 0 && (
+        <ol class="pipeline" aria-label="Pipeline stages">
+          {project.pipeline.map((stage) => <li>{stage}</li>)}
+        </ol>
+      )}
+
+      {project.images && project.images.length > 0 && (
+        <div class="project-images">
+          {project.images.map((image) => (
+            <figure>
+              <img src={image.src} alt={image.alt} loading="lazy" width="960" height="540" />
+              <figcaption>{image.alt}</figcaption>
+            </figure>
+          ))}
+        </div>
+      )}
+
+      <div class="project-sections">
+        <section>
+          <h2>Overview</h2>
+          <p>{project.detail.overview}</p>
+        </section>
+
+        <section>
+          <h2>Problem</h2>
+          <p>{project.detail.problem}</p>
+        </section>
+
+        <section>
+          <h2>Approach</h2>
+          <p>{project.detail.approach}</p>
+        </section>
+
+        <section>
+          <h2>Technical Implementation</h2>
+          <p>{project.detail.implementation}</p>
+        </section>
+
+        <section>
+          <h2>Evaluation &amp; Results</h2>
+          <p>{project.detail.evaluation}</p>
+          {project.stat && (
+            <p class="stat">
+              {project.stat}
+              {project.statCaveat && <span class="stat-caveat"> — {project.statCaveat}</span>}
+            </p>
+          )}
+        </section>
+
+        <section>
+          <h2>What I Learned</h2>
+          <p>{project.detail.learned}</p>
+        </section>
+      </div>
+
+      <a class="link" href={project.github} target="_blank" rel="noopener noreferrer">View repository on GitHub &rarr;</a>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .project {
+    padding: var(--space-5) 0 var(--space-6);
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-bottom: var(--space-4);
+    font-size: 0.9rem;
+  }
+
+  .project-problem {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    color: var(--color-text-muted);
+  }
+
+  .project-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin: var(--space-3) 0 var(--space-4);
+  }
+
+  .pipeline {
+    list-style: none;
+    margin: 0 0 var(--space-4);
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+  }
+
+  .pipeline li {
+    padding: 0.6em 0.9em;
+    border: 1px solid var(--color-border);
+  }
+
+  .pipeline li + li {
+    margin-top: var(--space-1);
+    position: relative;
+  }
+
+  .pipeline li + li::before {
+    content: '\2193';
+    display: block;
+    text-align: center;
+    margin-bottom: var(--space-1);
+    color: var(--color-text-muted);
+  }
+
+  .project-images {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    margin-bottom: var(--space-4);
+  }
+
+  .project-images figure {
+    margin: 0;
+  }
+
+  .project-images img {
+    border: 1px solid var(--color-border);
+    width: 100%;
+    height: auto;
+  }
+
+  .project-images figcaption {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    margin-top: 0.4rem;
+  }
+
+  .project-sections section {
+    border-bottom: 1px solid var(--color-border);
+    padding: var(--space-4) 0;
+  }
+
+  .project-sections section:first-child {
+    padding-top: 0;
+  }
+
+  .project-sections section:last-child {
+    border-bottom: none;
+  }
+
+  .project-sections h2 {
+    font-size: 1.2rem;
+  }
+</style>

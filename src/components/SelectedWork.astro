@@ -1,0 +1,94 @@
+---
+import { projects } from '../data/projects';
+---
+
+<section id="work">
+  <div class="page">
+    <div class="section-heading">
+      <h2>Selected Work</h2>
+      <span class="eyebrow">01&ndash;{String(projects.length).padStart(2, '0')}</span>
+    </div>
+
+    <ol class="work-list">
+      {projects.map((project) => (
+        <li class="work-item reveal">
+          <span class="work-index eyebrow">{project.index}</span>
+          <div class="work-body">
+            <h3>{project.title}</h3>
+            <p class="work-problem">{project.problem}</p>
+            <p>{project.summary}</p>
+
+            {project.stat && (
+              <p class="stat">
+                {project.stat}
+                {project.statCaveat && <span class="stat-caveat"> — {project.statCaveat}</span>}
+              </p>
+            )}
+
+            <ul class="tech-list">
+              {project.tech.map((t) => <li>{t}</li>)}
+            </ul>
+
+            <div class="work-links">
+              <a class="link" href={`/work/${project.slug}/`}>Read more</a>
+              <a class="link" href={project.github} target="_blank" rel="noopener noreferrer">View repository</a>
+              {project.relatedGithub && (
+                <a class="link" href={project.relatedGithub.href} target="_blank" rel="noopener noreferrer">
+                  {project.relatedGithub.label}
+                </a>
+              )}
+            </div>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .work-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+
+  .work-item {
+    display: grid;
+    grid-template-columns: 3rem 1fr;
+    gap: var(--space-3);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .work-item:first-child {
+    border-top: none;
+    padding-top: 0;
+  }
+
+  .work-index {
+    padding-top: 0.2rem;
+  }
+
+  .work-problem {
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    color: var(--color-text);
+  }
+
+  .work-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-2);
+  }
+
+  @media (max-width: 640px) {
+    .work-item {
+      grid-template-columns: 1fr;
+      gap: var(--space-1);
+    }
+  }
+</style>

@@ -1,0 +1,64 @@
+---
+import { skillGroups } from '../data/skills';
+---
+
+<section id="toolkit" class="toolkit">
+  <div class="page">
+    <div class="section-heading">
+      <h2>Technical Toolkit</h2>
+    </div>
+
+    <dl class="toolkit-grid">
+      {skillGroups.map((group) => (
+        <div class="toolkit-group">
+          <dt>{group.category}</dt>
+          <dd>{group.items.join(', ')}</dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+</section>
+
+<style>
+  .toolkit h2 {
+    font-size: 1.3rem;
+  }
+
+  .toolkit-grid {
+    display: grid;
+    grid-template-columns: 10rem 1fr;
+    row-gap: var(--space-2);
+    column-gap: var(--space-3);
+    margin: 0;
+  }
+
+  .toolkit-group {
+    display: contents;
+  }
+
+  .toolkit-group dt {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+    padding-top: 0.15rem;
+  }
+
+  .toolkit-group dd {
+    margin: 0;
+    color: var(--color-text-muted);
+  }
+
+  @media (max-width: 640px) {
+    .toolkit-grid {
+      grid-template-columns: 1fr;
+      row-gap: 0.2rem;
+    }
+
+    .toolkit-group {
+      display: block;
+      margin-bottom: var(--space-2);
+    }
+  }
+</style>

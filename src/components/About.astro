@@ -1,0 +1,31 @@
+---
+import { about } from '../data/site';
+---
+
+<section id="about">
+  <div class="page">
+    <div class="section-heading">
+      <h2>About</h2>
+    </div>
+
+    {about.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+
+    <ul class="credentials">
+      {about.credentials.map((c) => <li>{c}</li>)}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .credentials {
+    list-style: none;
+    margin: var(--space-2) 0 0;
+    padding: 0;
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+  }
+
+  .credentials li {
+    margin-bottom: 0.2rem;
+  }
+</style>

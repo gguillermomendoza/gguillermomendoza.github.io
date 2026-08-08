@@ -1,0 +1,154 @@
+---
+import { site } from '../data/site';
+
+const navLinks = [
+  { label: 'Work', href: '/#work' },
+  { label: 'Experience', href: '/#experience' },
+  { label: 'About', href: '/#about' },
+];
+---
+
+<header class="nav">
+  <div class="page nav-inner">
+    <a class="wordmark" href="/">{site.name}</a>
+
+    <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-menu">
+      <span class="visually-hidden">Menu</span>
+      <span class="nav-toggle-icon" aria-hidden="true"></span>
+    </button>
+
+    <nav id="nav-menu" class="nav-menu" aria-label="Primary">
+      <ul>
+        {navLinks.map((link) => (
+          <li><a class="link" href={link.href}>{link.label}</a></li>
+        ))}
+        <li><a class="link" href={site.resumeHref} target="_blank" rel="noopener noreferrer">Résumé</a></li>
+        <li><a class="link" href={site.github} target="_blank" rel="noopener noreferrer">GitHub</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: color-mix(in srgb, var(--color-bg) 92%, transparent);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: var(--space-2);
+    padding-bottom: var(--space-2);
+  }
+
+  .wordmark {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 1.05rem;
+    text-decoration: none;
+    color: var(--color-text);
+  }
+
+  .nav-menu ul {
+    display: flex;
+    gap: var(--space-3);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-menu a {
+    text-decoration: none;
+    font-size: 0.95rem;
+  }
+
+  .nav-toggle {
+    display: none;
+    background: none;
+    border: 1px solid var(--color-border);
+    padding: 0.4rem 0.6rem;
+    cursor: pointer;
+  }
+
+  .nav-toggle-icon,
+  .nav-toggle-icon::before,
+  .nav-toggle-icon::after {
+    display: block;
+    width: 1.1rem;
+    height: 2px;
+    background: var(--color-text);
+    position: relative;
+  }
+
+  .nav-toggle-icon::before,
+  .nav-toggle-icon::after {
+    content: '';
+    position: absolute;
+    left: 0;
+  }
+
+  .nav-toggle-icon::before {
+    top: -5px;
+  }
+
+  .nav-toggle-icon::after {
+    top: 5px;
+  }
+
+  @media (max-width: 640px) {
+    .nav-toggle {
+      display: block;
+    }
+
+    .nav-menu {
+      display: none;
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 100%;
+      background: var(--color-bg);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .nav-menu.is-open {
+      display: block;
+    }
+
+    .nav-menu ul {
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .nav-menu li {
+      border-top: 1px solid var(--color-border);
+    }
+
+    .nav-menu a {
+      display: block;
+      padding: var(--space-2) var(--space-3);
+    }
+  }
+</style>
+
+<script>
+  const toggle = document.getElementById('nav-toggle');
+  const menu = document.getElementById('nav-menu');
+
+  toggle?.addEventListener('click', () => {
+    const isOpen = menu?.classList.toggle('is-open');
+    toggle.setAttribute('aria-expanded', String(Boolean(isOpen)));
+  });
+
+  menu?.addEventListener('click', (event) => {
+    if ((event.target as HTMLElement).tagName === 'A') {
+      menu.classList.remove('is-open');
+      toggle?.setAttribute('aria-expanded', 'false');
+    }
+  });
+</script>
