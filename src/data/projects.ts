@@ -29,6 +29,7 @@ export interface Project {
   statCaveat?: string;
   tech: string[];
   github: string;
+  document?: { label: string; href: string };
   relatedGithub?: { label: string; href: string };
   images?: ProjectImage[];
   pipeline?: string[];
@@ -58,6 +59,10 @@ export const projects: Project[] = [
       'cross-validation',
     ],
     github: 'https://github.com/gguillermomendoza/complex-valued-models-on-BCI-thesis',
+    document: {
+      label: 'Read thesis (PDF)',
+      href: '/Thesis.pdf',
+    },
     detail: {
       overview:
         'My undergraduate honors thesis: an end-to-end machine learning pipeline for high-dimensional EEG motor-imagery data, built to answer whether complex-valued signal representations carry information a real-valued baseline discards.',

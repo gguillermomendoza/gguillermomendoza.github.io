@@ -38,6 +38,11 @@ import { projects } from '../data/projects';
             <div class="work-links">
               <a class="link stretched-link" href={`/work/${project.slug}/`}>Read more</a>
               <a class="link" href={project.github} target="_blank" rel="noopener noreferrer">View repository</a>
+              {project.document && (
+                <a class="link" href={project.document.href} target="_blank" rel="noopener noreferrer">
+                  {project.document.label}
+                </a>
+              )}
               {project.relatedGithub && (
                 <a class="link" href={project.relatedGithub.href} target="_blank" rel="noopener noreferrer">
                   {project.relatedGithub.label}
