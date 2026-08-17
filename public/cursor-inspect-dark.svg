@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="74" height="24" viewBox="0 0 74 24">
+  <circle cx="2" cy="12" r="1.5" fill="#6f96ff" />
+  <rect x="9" y="3" width="64" height="18" fill="#ecebe4" />
+  <text x="41" y="15.5" text-anchor="middle" font-family="Consolas, monospace" font-size="9" letter-spacing=".8" fill="#111210">INSPECT</text>
+</svg>

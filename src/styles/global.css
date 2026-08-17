@@ -360,100 +360,26 @@ button:focus-visible,
 /* ---------------------------------------------------------------------- */
 /* Custom cursor                                                          */
 /* ---------------------------------------------------------------------- */
-@media (pointer: fine) {
-  html.has-custom-cursor,
-  html.has-custom-cursor * {
-    cursor: none !important;
+@media (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  html {
+    --site-cursor: url('/cursor-reticle-light.svg') 9 9, crosshair;
   }
 
-  .cursor {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 200;
-    pointer-events: none;
-    transform: translate(-50%, -50%);
-    will-change: transform;
+  html,
+  html * {
+    cursor: var(--site-cursor) !important;
   }
 
-  .cursor-reticle {
-    position: relative;
-    width: 18px;
-    height: 18px;
-    display: block;
+  [data-cursor='view'] {
+    --site-cursor: url('/cursor-view-light.svg') 2 12, pointer;
   }
 
-  .cursor-reticle::before,
-  .cursor-reticle::after {
-    content: '';
-    position: absolute;
-    background: var(--color-text);
+  [data-cursor='inspect'] {
+    --site-cursor: url('/cursor-inspect-light.svg') 2 12, crosshair;
   }
 
-  .cursor-reticle::before {
-    left: 50%;
-    top: 0;
-    width: 1px;
-    height: 100%;
-    transform: translateX(-50%);
-  }
-
-  .cursor-reticle::after {
-    top: 50%;
-    left: 0;
-    height: 1px;
-    width: 100%;
-    transform: translateY(-50%);
-  }
-
-  .cursor-dot {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 3px;
-    height: 3px;
-    border-radius: 50%;
-    background: var(--color-accent);
-    transform: translate(-50%, -50%);
-  }
-
-  .cursor-tag {
-    display: none;
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    white-space: nowrap;
-    color: var(--color-bg);
-    background: var(--color-text);
-    padding: 0.2em 0.5em;
-    transform: translate(10px, -6px);
-  }
-
-  .cursor-arrow {
-    display: none;
-    font-size: 1rem;
-    color: var(--color-accent);
-    transform: translate(6px, -6px);
-  }
-
-  .cursor[data-state='view'] .cursor-reticle,
-  .cursor[data-state='inspect'] .cursor-reticle,
-  .cursor[data-state='link'] .cursor-reticle {
-    display: none;
-  }
-
-  .cursor[data-state='view'] .cursor-tag,
-  .cursor[data-state='inspect'] .cursor-tag {
-    display: block;
-  }
-
-  .cursor[data-state='link'] .cursor-arrow {
-    display: block;
-  }
-
-  [data-cursor-target] {
-    position: relative;
+  a[target='_blank'] {
+    --site-cursor: url('/cursor-link-light.svg') 2 20, pointer;
   }
 
   [data-cursor='view'] .scan-corner,
@@ -461,7 +387,8 @@ button:focus-visible,
     opacity: 0;
   }
 
-  .is-cursor-hover .scan-corner {
+  [data-cursor='view']:hover .scan-corner,
+  [data-cursor='inspect']:hover .scan-corner {
     opacity: 1;
   }
 
@@ -480,9 +407,21 @@ button:focus-visible,
   .scan-corner-br { bottom: -6px; right: -6px; border-bottom: 1px solid; border-right: 1px solid; }
 }
 
-@media (pointer: coarse), (prefers-reduced-motion: reduce) {
-  .cursor {
-    display: none !important;
+@media (pointer: fine) and (prefers-reduced-motion: no-preference) and (prefers-color-scheme: dark) {
+  html {
+    --site-cursor: url('/cursor-reticle-dark.svg') 9 9, crosshair;
+  }
+
+  [data-cursor='view'] {
+    --site-cursor: url('/cursor-view-dark.svg') 2 12, pointer;
+  }
+
+  [data-cursor='inspect'] {
+    --site-cursor: url('/cursor-inspect-dark.svg') 2 12, crosshair;
+  }
+
+  a[target='_blank'] {
+    --site-cursor: url('/cursor-link-dark.svg') 2 20, pointer;
   }
 }
 
