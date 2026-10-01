@@ -79,25 +79,25 @@ export const projects: Project[] = [
   {
     slug: 'grounded-ai-resume-builder',
     index: '02',
-    title: 'Grounded AI Résumé Builder',
-    problem: 'LLMs make things up, which is a problem when the thing is your résumé.',
+    title: 'Grounded AI Resume Builder',
+    problem: 'LLMs make things up, which is a problem when the thing is your resume.',
     summary:
-      'I built a Gradio app that extracts job requirements, retrieves evidence from your résumé and GitHub history, and checks its own output for unsupported claims before it reaches you.',
+      'I built a Gradio app that extracts job requirements, retrieves evidence from your resume and GitHub history, and checks its own output for unsupported claims before it reaches you.',
     tech: ['Python', 'LLMs (Gemini)', 'retrieval', 'grounded generation', 'evaluation', 'Gradio', 'pytest', 'GitHub Actions'],
     github: 'https://github.com/gguillermomendoza/ai_resume_builder',
     detail: {
       overview:
-        'An applied AI system that tailors résumés and drafts cover letters against a specific job description, built around the constraint that every claim it produces should be traceable back to real evidence rather than generated freely.',
+        'An applied AI system that tailors resumes and drafts cover letters against a specific job description, built around the constraint that every claim it produces should be traceable back to real evidence rather than generated freely.',
       problem:
-        'Generic LLM résumé tools tend to produce fluent text that quietly invents skills, experience, or achievements the applicant does not have. For a document whose entire purpose is to be trusted, that is disqualifying. The problem is not "generate résumé text," it is "generate résumé text that is grounded and can be checked."',
+        'Generic LLM resume tools tend to produce fluent text that quietly invents skills, experience, or achievements the applicant does not have. For a document whose entire purpose is to be trusted, that is disqualifying. The problem is not "generate resume text," it is "generate resume text that is grounded and can be checked."',
       approach:
-        'The system extracts structured requirements from a target job description, retrieves supporting evidence from the résumé and optional GitHub data, and generates recommendations from that retrieved evidence rather than from the model\'s unconstrained output. It separates factual evidence (things that are true and verifiable) from writing-style examples (phrasing to imitate but not to source facts from), and evaluates requirement coverage explicitly so gaps are visible instead of silently glossed over.',
+        'The system extracts structured requirements from a target job description, retrieves supporting evidence from the resume and optional GitHub data, and generates recommendations from that retrieved evidence rather than from the model\'s unconstrained output. It separates factual evidence (things that are true and verifiable) from writing-style examples (phrasing to imitate but not to source facts from), and evaluates requirement coverage explicitly so gaps are visible instead of silently glossed over.',
       implementation:
         'Built in Python with a Gradio interface and Gemini as the underlying LLM. Generated output is checked for unsupported claims before being surfaced, and the system provides source tracing so a claim can be traced back to the evidence it came from. The project includes API logging, error handling, a pytest test suite, and a GitHub Actions CI workflow that runs the tests.',
       evaluation:
-        "There is no single accuracy percentage to report here — the meaningful result is the grounding machinery itself: requirement-coverage evaluation surfaces gaps between a job description and a résumé, and the unsupported-claims check catches generated statements that don't trace back to real evidence, which is the actual failure mode this project was built to prevent.",
+        "There is no single accuracy percentage to report here — the meaningful result is the grounding machinery itself: requirement-coverage evaluation surfaces gaps between a job description and a resume, and the unsupported-claims check catches generated statements that don't trace back to real evidence, which is the actual failure mode this project was built to prevent.",
       learned:
-        'Grounding is mostly an evaluation problem, not a prompting problem. The hard part was not getting the model to write reasonable résumé text — it was building checks that could catch the cases where it did not, and separating "this is a fact about you" from "this is a style to imitate" so the two failure modes are caught differently.',
+        'Grounding is mostly an evaluation problem, not a prompting problem. The hard part was not getting the model to write reasonable resume text — it was building checks that could catch the cases where it did not, and separating "this is a fact about you" from "this is a style to imitate" so the two failure modes are caught differently.',
     },
   },
   {

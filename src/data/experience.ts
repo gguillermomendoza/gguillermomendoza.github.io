@@ -1,5 +1,5 @@
 // Experience / research entries. Intentionally compact — see PORTFOLIO_SPEC.md:
-// this should read as a short list explaining the projects, not a résumé dump.
+// this should read as a short list explaining the projects, not a resume dump.
 
 export interface ExperienceEntry {
   role: string;
