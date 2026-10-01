@@ -1,9 +1,9 @@
 // Selected Work content. This is the single place to add, edit, or reorder projects —
 // homepage summaries and detail pages both read from here.
 //
-// Facts here were verified against each repo's README before writing (see plan.md).
-// Do not add a metric or claim without a source: repo README, or explicitly
-// caveated as coming from outside the repo (see the thesis `resultCaveat` field).
+// Facts here were verified against each project's source material (see plan.md).
+// Do not add a metric or claim without a specific comparison supported by that
+// material. For the EEG project, the thesis is the authoritative source.
 
 export interface ProjectImage {
   src: string;
@@ -44,10 +44,8 @@ export const projects: Project[] = [
     problem:
       'Can complex-valued representations reveal structure in EEG that standard real-valued models miss?',
     summary:
-      'I built a fold-safe pipeline comparing real-valued CSP, complex-valued CSP, and a complex-valued neural architecture (TIMBRE) on motor-imagery EEG, with leakage checks and spectral diagnostics built in.',
-    stat: '~10 point accuracy improvement over baseline',
-    statCaveat:
-      'reported in the broader honors thesis, not a number stated in the repository README itself',
+      'I built a fold-safe pipeline comparing real-valued CSP, complex-valued CSP, and TIMBRE on motor-imagery EEG. cCSP consistently outperformed rCSP across the three analyzed subjects and tested component counts; TIMBRE and optimization outcomes depended on the subject and configuration.',
+    stat: 'cCSP outperformed rCSP across all 3 analyzed subjects and 4 tested component counts',
     tech: [
       'Python',
       'TensorFlow / Keras',
@@ -67,15 +65,15 @@ export const projects: Project[] = [
       overview:
         'My undergraduate honors thesis: an end-to-end machine learning pipeline for high-dimensional EEG motor-imagery data, built to answer whether complex-valued signal representations carry information a real-valued baseline discards.',
       problem:
-        'Motor-imagery EEG is high-dimensional, noisy, and easy to overfit to spurious structure. Standard approaches reduce each trial to real-valued band-power features before classifying. That discards phase information, which may or may not matter for decoding — the thesis set out to test whether it does, carefully enough that a positive result could be trusted.',
+        'Motor-imagery EEG is high-dimensional, noisy, and easy to overfit to spurious structure. In this study, rCSP used the real part of the analytic signal, while cCSP used its full complex covariance structure. The thesis tested whether that representational difference affected decoding performance, with TIMBRE evaluated as a separate complex-valued model.',
       approach:
-        'The pipeline compares three approaches on the same motor-imagery data: real-valued Common Spatial Patterns (CSP), complex-valued CSP, and TIMBRE, a complex-valued neural architecture. Preprocessing includes bandpass filtering and analytic-signal construction (Hilbert transform) to produce the complex-valued representations, followed by whitening. Hyperparameters were tuned with Optuna.',
+        'The primary comparison held the CSP framework and logistic-regression classifier constant while changing the spatial filters from real-valued CSP (rCSP) to complex-valued CSP (cCSP). Both were tested with 1, 2, 4, and 8 components per class. TIMBRE, a complex-valued neural architecture, was evaluated separately across hidden-layer sizes and with Optuna tuning. Preprocessing included high-pass filtering, analytic-signal construction with the Hilbert transform, and whitening.',
       implementation:
-        'Built in Python with MNE for EEG preprocessing, scikit-learn for the CSP baselines, and TensorFlow/Keras for TIMBRE. Evaluation is fold-safe: cross-validation splits are constructed so that no information from a held-out fold leaks into training through preprocessing or hyperparameter selection, a common failure mode in EEG decoding pipelines. The pipeline also includes explicit leakage and sanity checks, plus spectral analysis of the learned representations to check that gains are localized where they should be, not artifacts of the pipeline.',
+        'Built in Python with MNE for EEG preprocessing, scikit-learn for logistic regression, and TensorFlow/Keras for TIMBRE. All models were evaluated per subject with 5-fold cross-validation, and whitening was fit only on each training fold. Hyperparameter searches used inner validation splits before evaluation on the held-out outer folds. Spectral analysis then examined complex projections on held-out data; class effects in TIMBRE activations were tested with a two-way ANOVA and false-discovery-rate correction.',
       evaluation:
-        'The complex-valued approaches surfaced structure in the EEG that the real-valued CSP baseline did not capture, consistent with phase carrying decodable information beyond band power alone. The broader thesis reports an accuracy improvement of roughly 10 absolute percentage points over baseline; that figure comes from the full thesis writeup rather than being computed directly in the repository, so it is presented here with that caveat rather than as a repo-verified number.',
+        'The consistent result was specific to the CSP comparison: cCSP outperformed rCSP for each of the three analyzed subjects at every tested component count (1, 2, 4, and 8). TIMBRE remained competitive with cCSP but did not uniformly outperform it. Its performance and gains from optimization varied by subject and configuration, so the thesis does not support collapsing these results into one overall improvement percentage.',
       learned:
-        "The leakage and sanity checks mattered as much as the modeling. It's easy to get an EEG pipeline that reports a great number because of a subtle preprocessing leak, not because the model learned anything real — building in fold-safe evaluation and diagnostics from the start was what made the comparison between methods trustworthy.",
+        'The cCSP-vs-rCSP result and the TIMBRE optimization results answer different questions and need to remain separate. The former was consistent across the analyzed subjects and component counts; the latter was subject- and configuration-dependent. Because the study used three selected subjects from one dataset, it does not establish how the quantitative results generalize to a broader population.',
     },
   },
   {

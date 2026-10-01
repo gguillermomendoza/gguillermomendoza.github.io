@@ -13,7 +13,7 @@ export const experience: ExperienceEntry[] = [
     role: 'Research Assistant',
     org: 'beatLab',
     summary:
-      'Ran hands-on experiments and analyzed the resulting data as part of an ongoing research program, working from an open question toward a defensible finding.',
+      'Researched EEG motor-imagery decoding by comparing rCSP, cCSP, and TIMBRE. cCSP consistently outperformed rCSP across the three analyzed subjects and tested component counts; TIMBRE and optimization outcomes varied by subject and configuration.',
   },
   {
     role: 'Research Assistant / Lab Manager',
