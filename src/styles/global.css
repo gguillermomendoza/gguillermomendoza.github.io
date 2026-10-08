@@ -144,32 +144,9 @@ p {
 }
 
 .dotted-rule {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
   margin: var(--space-4) 0;
   border: none;
   border-top: 1px dotted var(--color-border);
-  color: var(--color-text-muted);
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.06em;
-}
-
-.dotted-rule-label {
-  position: relative;
-  top: -0.65em;
-  background: var(--color-bg);
-  padding: 0 0.5em;
-  margin: 0 auto;
-}
-
-.dotted-rule-label::before {
-  content: '\2014 ';
-}
-
-.dotted-rule-label::after {
-  content: ' \2014';
 }
 
 /* ---------------------------------------------------------------------- */

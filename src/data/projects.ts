@@ -21,7 +21,6 @@ export interface ProjectDetail {
 
 export interface Project {
   slug: string;
-  index: string;
   title: string;
   problem: string;
   summary: string;
@@ -39,7 +38,6 @@ export interface Project {
 export const projects: Project[] = [
   {
     slug: 'eeg-complex-valued-models',
-    index: '01',
     title: 'Complex-Valued Models for EEG Motor Imagery',
     problem:
       'Can complex-valued representations reveal structure in EEG that standard real-valued models miss?',
@@ -78,7 +76,6 @@ export const projects: Project[] = [
   },
   {
     slug: 'grounded-ai-resume-builder',
-    index: '02',
     title: 'Grounded AI Resume Builder',
     problem: 'LLMs make things up, which is a problem when the thing is your resume.',
     summary:
@@ -102,7 +99,6 @@ export const projects: Project[] = [
   },
   {
     slug: 'twitter-coronavirus-mapreduce',
-    index: '03',
     title: 'Coronavirus Twitter Analysis',
     problem: 'How do hashtags spread across languages and countries during a pandemic?',
     summary:
@@ -141,7 +137,6 @@ export const projects: Project[] = [
   },
   {
     slug: 'postgres-query-optimization',
-    index: '04',
     title: 'PostgreSQL Query Optimization',
     problem: "A benchmark query set that took 39 minutes unindexed isn't usable.",
     summary:

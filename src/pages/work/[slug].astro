@@ -19,7 +19,6 @@ const pageTitle = `${project.title} — Guillermo Mendoza`;
       <a class="link back-link" href="/#work">&larr; Selected Work</a>
 
       <p class="path-tag">/work/{project.slug}/</p>
-      <p class="eyebrow">{project.index}</p>
       <h1>{project.title}</h1>
       <p class="project-problem">{project.problem}</p>
 
@@ -60,31 +59,31 @@ const pageTitle = `${project.title} — Guillermo Mendoza`;
 
       <div class="project-sections">
         <section>
-          <p class="dotted-rule"><span class="dotted-rule-label">01</span></p>
+          <div class="dotted-rule" aria-hidden="true"></div>
           <h2>Overview</h2>
           <p>{project.detail.overview}</p>
         </section>
 
         <section>
-          <p class="dotted-rule"><span class="dotted-rule-label">02</span></p>
+          <div class="dotted-rule" aria-hidden="true"></div>
           <h2>Problem</h2>
           <p>{project.detail.problem}</p>
         </section>
 
         <section>
-          <p class="dotted-rule"><span class="dotted-rule-label">03</span></p>
+          <div class="dotted-rule" aria-hidden="true"></div>
           <h2>Approach</h2>
           <p>{project.detail.approach}</p>
         </section>
 
         <section>
-          <p class="dotted-rule"><span class="dotted-rule-label">04</span></p>
+          <div class="dotted-rule" aria-hidden="true"></div>
           <h2>Technical Implementation</h2>
           <p>{project.detail.implementation}</p>
         </section>
 
         <section>
-          <p class="dotted-rule"><span class="dotted-rule-label">05</span></p>
+          <div class="dotted-rule" aria-hidden="true"></div>
           <h2>Evaluation &amp; Results</h2>
           <p>{project.detail.evaluation}</p>
           {project.stat && (
@@ -96,7 +95,7 @@ const pageTitle = `${project.title} — Guillermo Mendoza`;
         </section>
 
         <section>
-          <p class="dotted-rule"><span class="dotted-rule-label">06</span></p>
+          <div class="dotted-rule" aria-hidden="true"></div>
           <h2>What I Learned</h2>
           <p>{project.detail.learned}</p>
         </section>
