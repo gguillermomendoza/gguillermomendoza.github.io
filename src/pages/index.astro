@@ -1,9 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
-import SignalStrip from '../components/SignalStrip.astro';
-import SelectedWork from '../components/SelectedWork.astro';
 import Experience from '../components/Experience.astro';
+import SelectedWork from '../components/SelectedWork.astro';
 import About from '../components/About.astro';
 import Toolkit from '../components/Toolkit.astro';
 import Contact from '../components/Contact.astro';
@@ -11,10 +10,79 @@ import Contact from '../components/Contact.astro';
 
 <BaseLayout>
   <Hero />
-  <SignalStrip />
-  <SelectedWork />
-  <Experience />
-  <About />
-  <Toolkit />
+  <div class="portfolio-grid">
+    <div class="profile-column">
+      <Experience />
+      <Toolkit />
+      <About />
+    </div>
+    <SelectedWork />
+  </div>
   <Contact />
 </BaseLayout>
+
+<style is:global>
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+    column-gap: var(--space-5);
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--space-3);
+    border-bottom: 1px dotted var(--color-border);
+  }
+
+  .profile-column,
+  .portfolio-grid > #projects {
+    min-width: 0;
+  }
+
+  .profile-column > section {
+    padding: 0;
+  }
+
+  .profile-column > section:first-child {
+    padding-top: var(--space-6);
+  }
+
+  .profile-column > section + section {
+    padding-top: var(--space-3);
+  }
+
+  .profile-column > section:last-child {
+    padding-bottom: var(--space-6);
+  }
+
+  .portfolio-grid > #projects {
+    border-bottom: 0;
+  }
+
+  .portfolio-grid section > .page {
+    max-width: none;
+    padding: 0;
+  }
+
+  @media (max-width: 64rem) {
+    .portfolio-grid {
+      display: block;
+      max-width: none;
+      padding: 0;
+    }
+
+    .portfolio-grid > #projects {
+      border-bottom: 1px dotted var(--color-border);
+    }
+
+    .profile-column > #toolkit {
+      padding-bottom: 0;
+      border-bottom: 1px dotted var(--color-border);
+    }
+
+    .portfolio-grid section > .page {
+      max-width: var(--page-max);
+      margin: 0 auto;
+      padding: 0 var(--space-3);
+    }
+  }
+</style>

@@ -6,5 +6,12 @@ import sitemap from '@astrojs/sitemap';
 // If this ever moves to a custom domain, only `site` needs to change.
 export default defineConfig({
   site: 'https://gguillermomendoza.github.io/',
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      filter: (page) => !new URL(page).pathname.startsWith('/work/'),
+    }),
+  ],
+  redirects: {
+    '/work/[slug]': '/projects/[slug]',
+  },
 });

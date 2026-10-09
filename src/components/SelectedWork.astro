@@ -2,10 +2,10 @@
 import { projects } from '../data/projects';
 ---
 
-<section id="work">
-  <div class="page">
+<section id="projects">
+  <div class="page" id="work">
     <div class="section-heading">
-      <h2>Selected Work</h2>
+      <h2>Projects</h2>
     </div>
 
     <ol class="work-list">
@@ -17,7 +17,7 @@ import { projects } from '../data/projects';
           <span class="scan-corner scan-corner-br"></span>
 
           <div class="work-body">
-            <p class="path-tag">/work/{project.slug}/</p>
+            <p class="path-tag">/projects/{project.slug}/</p>
             <h3>{project.title}</h3>
             <p class="work-problem">{project.problem}</p>
             <p>{project.summary}</p>
@@ -34,7 +34,7 @@ import { projects } from '../data/projects';
             </ul>
 
             <div class="work-links">
-              <a class="link stretched-link" href={`/work/${project.slug}/`}>Read more</a>
+              <a class="link stretched-link" href={`/projects/${project.slug}/`}>Read more</a>
               <a class="link" href={project.github} target="_blank" rel="noopener noreferrer">View repository</a>
               {project.document && (
                 <a class="link" href={project.document.href} target="_blank" rel="noopener noreferrer">

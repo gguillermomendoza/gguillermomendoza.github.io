@@ -16,9 +16,9 @@ const pageTitle = `${project.title} — Guillermo Mendoza`;
 <BaseLayout title={pageTitle} description={project.problem}>
   <article class="project">
     <div class="page">
-      <a class="link back-link" href="/#work">&larr; Selected Work</a>
+      <a class="link back-link" href="/#projects">&larr; Projects</a>
 
-      <p class="path-tag">/work/{project.slug}/</p>
+      <p class="path-tag">/projects/{project.slug}/</p>
       <h1>{project.title}</h1>
       <p class="project-problem">{project.problem}</p>
 
@@ -50,8 +50,28 @@ const pageTitle = `${project.title} — Guillermo Mendoza`;
         <div class="project-images">
           {project.images.map((image, i) => (
             <figure>
-              <img src={image.src} alt={image.alt} loading="lazy" width="960" height="540" />
-              <figcaption>fig. {i + 1} &mdash; {image.alt}</figcaption>
+              {image.href ? (
+                <a class="project-image-link" href={image.href} target="_blank" rel="noopener noreferrer">
+                  <img
+                    src={image.src}
+                    alt={image.alt}
+                    loading="lazy"
+                    decoding="async"
+                    width={image.width}
+                    height={image.height}
+                  />
+                </a>
+              ) : (
+                <img
+                  src={image.src}
+                  alt={image.alt}
+                  loading="lazy"
+                  decoding="async"
+                  width={image.width}
+                  height={image.height}
+                />
+              )}
+              <figcaption>fig. {i + 1} &mdash; {image.caption ?? image.alt}</figcaption>
             </figure>
           ))}
         </div>
@@ -59,31 +79,26 @@ const pageTitle = `${project.title} — Guillermo Mendoza`;
 
       <div class="project-sections">
         <section>
-          <div class="dotted-rule" aria-hidden="true"></div>
           <h2>Overview</h2>
           <p>{project.detail.overview}</p>
         </section>
 
         <section>
-          <div class="dotted-rule" aria-hidden="true"></div>
           <h2>Problem</h2>
           <p>{project.detail.problem}</p>
         </section>
 
         <section>
-          <div class="dotted-rule" aria-hidden="true"></div>
           <h2>Approach</h2>
           <p>{project.detail.approach}</p>
         </section>
 
         <section>
-          <div class="dotted-rule" aria-hidden="true"></div>
           <h2>Technical Implementation</h2>
           <p>{project.detail.implementation}</p>
         </section>
 
         <section>
-          <div class="dotted-rule" aria-hidden="true"></div>
           <h2>Evaluation &amp; Results</h2>
           <p>{project.detail.evaluation}</p>
           {project.stat && (
@@ -95,7 +110,6 @@ const pageTitle = `${project.title} — Guillermo Mendoza`;
         </section>
 
         <section>
-          <div class="dotted-rule" aria-hidden="true"></div>
           <h2>What I Learned</h2>
           <p>{project.detail.learned}</p>
         </section>
@@ -174,10 +188,21 @@ const pageTitle = `${project.title} — Guillermo Mendoza`;
     margin: 0;
   }
 
+  .project-image-link {
+    display: block;
+  }
+
   .project-images img {
+    display: block;
     border: 1px solid var(--color-border);
     width: 100%;
     height: auto;
+    transition: border-color 150ms ease;
+  }
+
+  .project-image-link:hover img,
+  .project-image-link:focus-visible img {
+    border-color: var(--color-accent);
   }
 
   .project-images figcaption {
@@ -189,10 +214,7 @@ const pageTitle = `${project.title} — Guillermo Mendoza`;
 
   .project-sections section {
     padding: var(--space-3) 0 var(--space-4);
-  }
-
-  .project-sections section:first-child .dotted-rule {
-    margin-top: 0;
+    border-bottom: none;
   }
 
   .project-sections h2 {
