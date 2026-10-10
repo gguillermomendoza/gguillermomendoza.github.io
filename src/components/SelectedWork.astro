@@ -4,70 +4,147 @@ import { projects } from '../data/projects';
 
 <section id="projects">
   <div class="page" id="work">
-    <div class="section-heading">
+    <div class="section-heading projects-heading">
       <h2>Projects</h2>
+
+      <div class="carousel-controls" data-carousel-controls>
+        <span class="carousel-status" data-carousel-status aria-live="polite">
+          1&ndash;{Math.min(3, projects.length)} / {projects.length}
+        </span>
+        <button class="carousel-button" type="button" data-carousel-previous aria-label="Show previous project">
+          &uarr;
+        </button>
+        <button class="carousel-button" type="button" data-carousel-next aria-label="Show next project">
+          &darr;
+        </button>
+      </div>
     </div>
 
-    <ol class="work-list">
-      {projects.map((project) => (
-        <li class="work-item reveal" data-cursor="view">
-          <span class="scan-corner scan-corner-tl"></span>
-          <span class="scan-corner scan-corner-tr"></span>
-          <span class="scan-corner scan-corner-bl"></span>
-          <span class="scan-corner scan-corner-br"></span>
+    <div
+      class="project-carousel"
+      data-project-carousel
+      aria-label="Project carousel"
+      tabindex="0"
+    >
+      <ol class="work-list">
+        {projects.map((project) => (
+          <li class="work-item reveal" data-cursor="view">
+            <span class="scan-corner scan-corner-tl"></span>
+            <span class="scan-corner scan-corner-tr"></span>
+            <span class="scan-corner scan-corner-bl"></span>
+            <span class="scan-corner scan-corner-br"></span>
 
-          <div class="work-body">
-            <p class="path-tag">/projects/{project.slug}/</p>
-            <h3>{project.title}</h3>
-            <p class="work-problem">{project.problem}</p>
-            <p>{project.summary}</p>
+            <div class="work-body">
+              <p class="path-tag">/projects/{project.slug}/</p>
+              <h3>{project.title}</h3>
+              <p class="work-problem">{project.problem}</p>
+              <p>{project.summary}</p>
 
-            {project.stat && (
-              <p class="stat">
-                {project.stat}
-                {project.statCaveat && <span class="stat-caveat"> — {project.statCaveat}</span>}
-              </p>
-            )}
-
-            <ul class="tech-list">
-              {project.tech.map((t) => <li>{t}</li>)}
-            </ul>
-
-            <div class="work-links">
-              <a class="link stretched-link" href={`/projects/${project.slug}/`}>Read more</a>
-              <a class="link" href={project.github} target="_blank" rel="noopener noreferrer">View repository</a>
-              {project.document && (
-                <a class="link" href={project.document.href} target="_blank" rel="noopener noreferrer">
-                  {project.document.label}
-                </a>
+              {project.stat && (
+                <p class="stat">
+                  {project.stat}
+                  {project.statCaveat && <span class="stat-caveat"> — {project.statCaveat}</span>}
+                </p>
               )}
-              {project.relatedGithub && (
-                <a class="link" href={project.relatedGithub.href} target="_blank" rel="noopener noreferrer">
-                  {project.relatedGithub.label}
-                </a>
-              )}
+
+              <ul class="tech-list">
+                {project.tech.map((t) => <li>{t}</li>)}
+              </ul>
+
+              <div class="work-links">
+                <a class="link stretched-link" href={`/projects/${project.slug}/`}>Read more</a>
+                <a class="link" href={project.github} target="_blank" rel="noopener noreferrer">View repository</a>
+                {project.document && (
+                  <a class="link" href={project.document.href} target="_blank" rel="noopener noreferrer">
+                    {project.document.label}
+                  </a>
+                )}
+                {project.relatedGithub && (
+                  <a class="link" href={project.relatedGithub.href} target="_blank" rel="noopener noreferrer">
+                    {project.relatedGithub.label}
+                  </a>
+                )}
+              </div>
             </div>
-          </div>
-        </li>
-      ))}
-    </ol>
+          </li>
+        ))}
+      </ol>
+    </div>
   </div>
 </section>
 
 <style>
+  .projects-heading {
+    align-items: center;
+  }
+
+  .carousel-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .carousel-status {
+    min-width: 4.5rem;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    text-align: right;
+  }
+
+  .carousel-button {
+    display: grid;
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    place-items: center;
+    border: 1px solid var(--color-border);
+    background: transparent;
+    color: var(--color-text);
+    font: inherit;
+    cursor: pointer;
+    transition: border-color 150ms ease, color 150ms ease;
+  }
+
+  .carousel-button:hover:not(:disabled) {
+    border-color: var(--color-text);
+  }
+
+  .carousel-button:disabled {
+    color: var(--color-text-muted);
+    cursor: not-allowed;
+    opacity: 0.35;
+  }
+
+  .project-carousel {
+    --carousel-gap: var(--space-3);
+    --visible-projects: 3;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-width: none;
+    scroll-snap-type: y mandatory;
+  }
+
+  .project-carousel::-webkit-scrollbar {
+    display: none;
+  }
+
   .work-list {
     list-style: none;
     margin: 0;
     padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-5);
+    display: grid;
+    grid-auto-rows: 1fr;
+    gap: var(--carousel-gap);
   }
 
   .work-item {
     position: relative;
-    padding-top: var(--space-4);
+    padding-top: var(--space-3);
     border-top: 1px dotted var(--color-border);
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
   }
 
   .work-item:first-child {
@@ -77,6 +154,10 @@ import { projects } from '../data/projects';
 
   .work-body .path-tag {
     margin: 0 0 0.3rem;
+  }
+
+  .work-body p {
+    max-width: none;
   }
 
   .work-problem {
@@ -103,4 +184,80 @@ import { projects } from '../data/projects';
     z-index: 0;
   }
 
+  @media (max-width: 64rem) {
+    .project-carousel {
+      --visible-projects: 2;
+    }
+  }
+
+  @media (max-width: 40rem) {
+    .project-carousel {
+      --visible-projects: 1;
+    }
+
+    .carousel-status {
+      min-width: auto;
+    }
+  }
+
 </style>
+
+<script>
+  const carousel = document.querySelector<HTMLElement>('[data-project-carousel]');
+  const controls = document.querySelector<HTMLElement>('[data-carousel-controls]');
+  const previous = controls?.querySelector<HTMLButtonElement>('[data-carousel-previous]');
+  const next = controls?.querySelector<HTMLButtonElement>('[data-carousel-next]');
+  const status = controls?.querySelector<HTMLElement>('[data-carousel-status]');
+  const items = carousel ? Array.from(carousel.querySelectorAll<HTMLElement>('.work-item')) : [];
+
+  if (carousel && previous && next && status && items.length) {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let currentIndex = 0;
+    let step = 0;
+    let visibleProjects = 1;
+    let scrollFrame = 0;
+
+    const updateControls = () => {
+      const maxIndex = Math.max(0, items.length - visibleProjects);
+      currentIndex = Math.min(Math.max(currentIndex, 0), maxIndex);
+      previous.disabled = currentIndex === 0;
+      next.disabled = currentIndex === maxIndex;
+      status.textContent = `${currentIndex + 1}\u2013${Math.min(currentIndex + visibleProjects, items.length)} / ${items.length}`;
+    };
+
+    const setLayout = () => {
+      const styles = getComputedStyle(carousel);
+      visibleProjects = Number.parseInt(styles.getPropertyValue('--visible-projects'), 10) || 1;
+      const gap = Number.parseFloat(styles.getPropertyValue('--carousel-gap')) || 0;
+      const rowHeight = items[0].getBoundingClientRect().height;
+      step = rowHeight + gap;
+      carousel.style.blockSize = `${rowHeight * visibleProjects + gap * (visibleProjects - 1)}px`;
+      currentIndex = Math.min(currentIndex, Math.max(0, items.length - visibleProjects));
+      carousel.scrollTo({ top: currentIndex * step });
+      updateControls();
+    };
+
+    const move = (direction: number) => {
+      currentIndex += direction;
+      updateControls();
+      carousel.scrollTo({
+        top: currentIndex * step,
+        behavior: reducedMotion.matches ? 'auto' : 'smooth',
+      });
+    };
+
+    previous.addEventListener('click', () => move(-1));
+    next.addEventListener('click', () => move(1));
+    carousel.addEventListener('scroll', () => {
+      cancelAnimationFrame(scrollFrame);
+      scrollFrame = requestAnimationFrame(() => {
+        currentIndex = step ? Math.round(carousel.scrollTop / step) : 0;
+        updateControls();
+      });
+    });
+
+    const resizeObserver = new ResizeObserver(setLayout);
+    resizeObserver.observe(carousel);
+    setLayout();
+  }
+</script>

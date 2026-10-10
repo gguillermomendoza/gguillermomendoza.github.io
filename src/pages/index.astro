@@ -11,8 +11,8 @@ import Contact from '../components/Contact.astro';
 <BaseLayout>
   <Hero />
   <div class="portfolio-grid">
+    <Experience />
     <div class="profile-column">
-      <Experience />
       <Toolkit />
       <About />
     </div>
@@ -24,7 +24,7 @@ import Contact from '../components/Contact.astro';
 <style is:global>
   .portfolio-grid {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
     align-items: start;
     column-gap: var(--space-5);
     max-width: 1200px;
@@ -33,9 +33,14 @@ import Contact from '../components/Contact.astro';
     border-bottom: 1px dotted var(--color-border);
   }
 
+  .portfolio-grid > #experience,
   .profile-column,
   .portfolio-grid > #projects {
     min-width: 0;
+  }
+
+  .portfolio-grid > #experience {
+    padding: var(--space-6) 0;
   }
 
   .profile-column > section {
@@ -55,6 +60,7 @@ import Contact from '../components/Contact.astro';
   }
 
   .portfolio-grid > #projects {
+    grid-column: 1 / -1;
     border-bottom: 0;
   }
 
