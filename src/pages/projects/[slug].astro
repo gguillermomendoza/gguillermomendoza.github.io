@@ -1,5 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectArchitecture from '../../components/ProjectArchitecture.astro';
+import ProjectImages from '../../components/ProjectImages.astro';
 import { projects } from '../../data/projects';
 
 export function getStaticPaths() {
@@ -16,7 +18,7 @@ const pageTitle = `${project.title} — Guillermo Mendoza`;
 <BaseLayout title={pageTitle} description={project.problem}>
   <article class="project">
     <div class="page">
-      <a class="link back-link" href="/#projects">&larr; Projects</a>
+      <a class="link back-link" href="/home/#projects">&larr; Projects</a>
 
       <p class="path-tag">/projects/{project.slug}/</p>
       <h1>{project.title}</h1>
@@ -27,60 +29,28 @@ const pageTitle = `${project.title} — Guillermo Mendoza`;
       </ul>
 
       <div class="project-links">
-        <a class="btn" href={project.github} target="_blank" rel="noopener noreferrer">View repository</a>
+        <a class="link" href={project.github} target="_blank" rel="noopener noreferrer">View repository</a>
         {project.document && (
-          <a class="btn btn-quiet" href={project.document.href} target="_blank" rel="noopener noreferrer">
+          <a class="link" href={project.document.href} target="_blank" rel="noopener noreferrer">
             {project.document.label}
           </a>
         )}
         {project.relatedGithub && (
-          <a class="btn btn-quiet" href={project.relatedGithub.href} target="_blank" rel="noopener noreferrer">
+          <a class="link" href={project.relatedGithub.href} target="_blank" rel="noopener noreferrer">
             {project.relatedGithub.label}
           </a>
         )}
       </div>
 
-      {project.pipeline && project.pipeline.length > 0 && (
-        <ol class="pipeline" aria-label="Pipeline stages">
-          {project.pipeline.map((stage) => <li>{stage}</li>)}
-        </ol>
-      )}
-
-      {project.images && project.images.length > 0 && (
-        <div class="project-images">
-          {project.images.map((image, i) => (
-            <figure>
-              {image.href ? (
-                <a class="project-image-link" href={image.href} target="_blank" rel="noopener noreferrer">
-                  <img
-                    src={image.src}
-                    alt={image.alt}
-                    loading="lazy"
-                    decoding="async"
-                    width={image.width}
-                    height={image.height}
-                  />
-                </a>
-              ) : (
-                <img
-                  src={image.src}
-                  alt={image.alt}
-                  loading="lazy"
-                  decoding="async"
-                  width={image.width}
-                  height={image.height}
-                />
-              )}
-              <figcaption>fig. {i + 1} &mdash; {image.caption ?? image.alt}</figcaption>
-            </figure>
-          ))}
-        </div>
+      {project.images && project.images.length > 0 && project.imagePlacement !== 'results' && (
+        <ProjectImages images={project.images} />
       )}
 
       <div class="project-sections">
         <section>
           <h2>Overview</h2>
           <p>{project.detail.overview}</p>
+          {project.architecture && <ProjectArchitecture architecture={project.architecture} />}
         </section>
 
         <section>
@@ -101,11 +71,8 @@ const pageTitle = `${project.title} — Guillermo Mendoza`;
         <section>
           <h2>Evaluation &amp; Results</h2>
           <p>{project.detail.evaluation}</p>
-          {project.stat && (
-            <p class="stat">
-              {project.stat}
-              {project.statCaveat && <span class="stat-caveat"> — {project.statCaveat}</span>}
-            </p>
+          {project.images && project.images.length > 0 && project.imagePlacement === 'results' && (
+            <ProjectImages images={project.images} />
           )}
         </section>
 
@@ -123,6 +90,15 @@ const pageTitle = `${project.title} — Guillermo Mendoza`;
 <style>
   .project {
     padding: var(--space-5) 0 var(--space-6);
+  }
+
+  .project > .page {
+    max-width: var(--portfolio-max);
+    padding: 0;
+  }
+
+  .project :global(p) {
+    max-width: none;
   }
 
   .back-link {
@@ -144,72 +120,9 @@ const pageTitle = `${project.title} — Guillermo Mendoza`;
   .project-links {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-2);
+    column-gap: var(--space-4);
+    row-gap: var(--space-2);
     margin: var(--space-3) 0 var(--space-4);
-  }
-
-  .pipeline {
-    list-style: none;
-    margin: 0 0 var(--space-4);
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    font-family: var(--font-mono);
-    font-size: 0.85rem;
-    color: var(--color-text-muted);
-  }
-
-  .pipeline li {
-    padding: 0.6em 0.9em;
-    border: 1px solid var(--color-border);
-  }
-
-  .pipeline li + li {
-    margin-top: var(--space-1);
-    position: relative;
-  }
-
-  .pipeline li + li::before {
-    content: '\2193';
-    display: block;
-    text-align: center;
-    margin-bottom: var(--space-1);
-    color: var(--color-text-muted);
-  }
-
-  .project-images {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3);
-    margin-bottom: var(--space-4);
-  }
-
-  .project-images figure {
-    margin: 0;
-  }
-
-  .project-image-link {
-    display: block;
-  }
-
-  .project-images img {
-    display: block;
-    border: 1px solid var(--color-border);
-    width: 100%;
-    height: auto;
-    transition: border-color 150ms ease;
-  }
-
-  .project-image-link:hover img,
-  .project-image-link:focus-visible img {
-    border-color: var(--color-accent);
-  }
-
-  .project-images figcaption {
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    color: var(--color-text-muted);
-    margin-top: 0.4rem;
   }
 
   .project-sections section {
@@ -219,5 +132,11 @@ const pageTitle = `${project.title} — Guillermo Mendoza`;
 
   .project-sections h2 {
     font-size: 1.2rem;
+  }
+
+  @media (max-width: 64rem) {
+    .project > .page {
+      max-width: var(--page-max);
+    }
   }
 </style>

@@ -1,0 +1,93 @@
+---
+import { site } from '../data/site';
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonicalURL} />
+    <title>Contact Guillermo Mendoza</title>
+    <meta name="description" content="Contact Guillermo Mendoza by email, LinkedIn, or GitHub." />
+  </head>
+  <body>
+    <main>
+      <h1>Contact</h1>
+
+      <address>
+        <p>Email: <a href={`mailto:${site.email}`}>{site.email}</a></p>
+        <p>LinkedIn: <a href={site.linkedin} target="_blank" rel="noopener noreferrer">Guillermo Mendoza</a></p>
+        <p>GitHub: <a href={site.github} target="_blank" rel="noopener noreferrer">@{site.githubHandle}</a></p>
+      </address>
+
+      <nav aria-label="Return to landing page">
+        <a href="/">Back</a>
+      </nav>
+    </main>
+  </body>
+</html>
+
+<style>
+  :global(*) {
+    box-sizing: border-box;
+  }
+
+  :global(html) {
+    background: #fff;
+    color: #000;
+    color-scheme: light;
+    font-family: 'Times New Roman', Times, serif;
+  }
+
+  :global(body) {
+    margin: 0;
+    padding: clamp(1rem, 2vw, 2rem);
+    font-size: clamp(1.1rem, 1.4vw, 1.3rem);
+    line-height: 1.55;
+  }
+
+  main {
+    max-width: 58rem;
+  }
+
+  h1 {
+    margin: 0 0 clamp(1.5rem, 3vw, 2.5rem);
+    font-size: clamp(2.75rem, 7vw, 6.5rem);
+    font-weight: 400;
+    line-height: 0.95;
+  }
+
+  address {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    font-style: normal;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  nav {
+    margin-top: 2.5rem;
+  }
+
+  a {
+    color: #0000ee;
+    text-decoration: none;
+  }
+
+  a:hover,
+  a:focus-visible {
+    text-decoration: underline;
+  }
+
+  a:focus-visible {
+    outline: 2px solid #0000ee;
+    outline-offset: 3px;
+  }
+</style>

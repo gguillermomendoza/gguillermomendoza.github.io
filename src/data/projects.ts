@@ -23,19 +23,24 @@ export interface ProjectDetail {
   learned: string;
 }
 
+export interface ProjectArchitecture {
+  inputs: string[];
+  processes: string[];
+  outputs: string[];
+}
+
 export interface Project {
   slug: string;
   title: string;
   problem: string;
   summary: string;
-  stat?: string;
-  statCaveat?: string;
   tech: string[];
   github: string;
   document?: { label: string; href: string };
   relatedGithub?: { label: string; href: string };
   images?: ProjectImage[];
-  pipeline?: string[];
+  imagePlacement?: 'intro' | 'results';
+  architecture?: ProjectArchitecture;
   detail: ProjectDetail;
 }
 
@@ -47,7 +52,6 @@ export const projects: Project[] = [
       'Can complex-valued representations reveal structure in EEG that standard real-valued models miss?',
     summary:
       'I built a fold-safe pipeline comparing real-valued CSP, complex-valued CSP, and TIMBRE on motor-imagery EEG. cCSP consistently outperformed rCSP across the three analyzed subjects and tested component counts; TIMBRE and optimization outcomes depended on the subject and configuration.',
-    stat: 'cCSP outperformed rCSP across all 3 analyzed subjects and 4 tested component counts',
     tech: [
       'Python',
       'TensorFlow / Keras',
@@ -95,7 +99,6 @@ export const projects: Project[] = [
       'Application updates arrive in inconsistent emails, but giving an LLM direct control of a tracker creates a new class of mistakes.',
     summary:
       'I built a scheduled Cloud Run job that reads Gmail with read-only OAuth and uses Gemini to extract typed application events. Deterministic Python then matches applications, routes ambiguous cases to a Firestore review queue, and applies only validated changes to Google Sheets.',
-    stat: 'No direct LLM writes — deterministic Python controls every mutation',
     tech: [
       'Python 3.13',
       'Gemini / Vertex AI',
@@ -109,13 +112,11 @@ export const projects: Project[] = [
       'pytest',
     ],
     github: 'https://github.com/gguillermomendoza/application-tracker',
-    pipeline: [
-      'Read-only Gmail retrieval',
-      'Gemini extracts a typed ApplicationEvent',
-      'Deterministic matching and decision engine',
-      'Validated Google Sheets write or Firestore review queue',
-      'Scheduled Cloud Run Job exits after the batch',
-    ],
+    architecture: {
+      inputs: ['Read-only Gmail messages'],
+      processes: ['Gemini extracts a typed ApplicationEvent', 'Deterministic matching and decision engine'],
+      outputs: ['Validated Google Sheets update', 'Firestore review queue for ambiguous cases'],
+    },
     detail: {
       overview:
         'A privacy-conscious automation that keeps a job-application spreadsheet synchronized with lifecycle emails while preserving a strict boundary between probabilistic interpretation and persistent writes.',
@@ -137,7 +138,6 @@ export const projects: Project[] = [
     problem: 'How do hashtags spread across languages and countries during a pandemic?',
     summary:
       'I processed about 1.1 billion geotagged tweets from 2020 with a custom MapReduce pipeline, streaming compressed daily archives in parallel across POSIX background processes instead of decompressing them to disk.',
-    stat: '~1.1 billion geotagged tweets processed',
     tech: ['Python', 'shell scripting', 'MapReduce', 'POSIX', 'large-scale data processing', 'visualization'],
     github: 'https://github.com/gguillermomendoza/twitter_coronavirus',
     relatedGithub: {
@@ -158,12 +158,12 @@ export const projects: Project[] = [
         height: 1600,
       },
     ],
-    pipeline: [
-      'Daily compressed tweet archive (365 days, 2020)',
-      'Parallel POSIX background mapper per day, streamed uncompressed',
-      'Per-day hashtag counts by language & country',
-      'Python reducer aggregates to yearly totals',
-    ],
+    imagePlacement: 'results',
+    architecture: {
+      inputs: ['365 daily compressed tweet archives', '~1.1 billion geotagged tweets'],
+      processes: ['Parallel POSIX mapper streams each archive', 'Python reducer combines per-day counts'],
+      outputs: ['Yearly hashtag totals by language and country'],
+    },
     detail: {
       overview:
         'A custom MapReduce pipeline built to study how COVID-related hashtags spread geographically and linguistically, run directly over roughly 1.1 billion geotagged tweets from 2020 without a distributed-computing framework.',
@@ -208,7 +208,6 @@ export const projects: Project[] = [
     problem: "A benchmark query set that took 39 minutes unindexed isn't usable.",
     summary:
       'I redesigned the schema (normalized vs. denormalized) and built targeted B-tree and GIN indexes to bring a 5-query benchmark on ~31M tweets down to under 2 seconds.',
-    stat: '~39 min unindexed → ~1.9 sec indexed, same 5-query benchmark',
     tech: ['PostgreSQL', 'SQL', 'database indexing', 'schema design', 'query optimization'],
     github: 'https://github.com/gguillermomendoza/twitter_postgres_indexes',
     detail: {
@@ -233,7 +232,6 @@ export const projects: Project[] = [
       'How can raw audio be modeled one sample at a time while still controlling the instrument family and pitch it generates?',
     summary:
       'I built PyTorch experiments for WaveNet-style autoregressive audio generation, including unconditional and NSynth-conditioned models. The pipeline trims 16 kHz audio into one-second chunks, encodes waveforms as 8-bit μ-law tokens, and generates new samples conditioned on instrument and pitch embeddings.',
-    stat: '16 kHz audio → 1-second chunks → 256 μ-law token classes',
     tech: [
       'Python',
       'PyTorch',
@@ -245,13 +243,15 @@ export const projects: Project[] = [
       'signal processing',
     ],
     github: 'https://github.com/gguillermomendoza/WavNet-EEG-Sonification',
-    pipeline: [
-      'Load and trim 16 kHz mono audio',
-      'Split audio into one-second chunks',
-      'Encode each sample into 256 μ-law classes',
-      'Train a dilated residual model with instrument and pitch conditioning',
-      'Autoregressively sample tokens and decode a waveform',
-    ],
+    architecture: {
+      inputs: ['16 kHz mono audio', 'Instrument-family and pitch labels'],
+      processes: [
+        'Trim and split audio into one-second chunks',
+        'Encode samples into 256 μ-law classes',
+        'Train and sample a conditioned dilated residual model',
+      ],
+      outputs: ['Decoded generated waveform'],
+    },
     detail: {
       overview:
         'A set of PyTorch experiments in raw-waveform generation: WaveNet-style models learn next-token prediction over audio, with a conditional variant that uses NSynth instrument-family and pitch metadata to steer generation.',
@@ -274,8 +274,6 @@ export const projects: Project[] = [
       'How do you retrieve a useful cross-section of opinion from millions of reviews without loading multi-gigabyte datasets into an application?',
     summary:
       'I built a shell pipeline that streams compressed Goodreads data, resolves every edition matching a title prefix, retrieves their reviews, and sends a bounded sample to an LLM for a short synthesis. Temporary intermediates are isolated per run and removed automatically.',
-    stat: '15.7M reviews across 2.3M books in compressed JSONL',
-    statCaveat: 'source dataset, 2006–2017',
     tech: [
       'shell scripting',
       'POSIX utilities',
@@ -287,13 +285,15 @@ export const projects: Project[] = [
       'retrieval-augmented generation',
     ],
     github: 'https://github.com/gguillermomendoza/goodreads-review-summaries',
-    pipeline: [
-      'Stream compressed book metadata',
-      'Prefix-match a title and collect edition IDs',
-      'Stream reviews matching any collected ID',
-      'Select up to 20 review texts with jq',
-      'Generate a two-to-three-sentence LLM summary',
-    ],
+    architecture: {
+      inputs: ['Compressed book metadata', 'Compressed Goodreads reviews', 'Title-prefix query'],
+      processes: [
+        'Resolve every matching edition ID',
+        'Stream matching reviews and select up to 20 texts',
+        'Send the bounded context to an LLM',
+      ],
+      outputs: ['Two-to-three-sentence review summary'],
+    },
     detail: {
       overview:
         'A lightweight retrieval-and-summarization tool implemented as a shell script over the public Goodreads dataset. Given a title, it finds matching editions, gathers their reviews, and asks an LLM to synthesize a concise view of reader sentiment.',

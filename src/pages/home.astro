@@ -1,0 +1,98 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Experience from '../components/Experience.astro';
+import SelectedWork from '../components/SelectedWork.astro';
+import Toolkit from '../components/Toolkit.astro';
+import AboutMe from '../components/AboutMe.astro';
+---
+
+<BaseLayout>
+  <div class="portfolio-grid">
+    <Experience />
+    <Toolkit />
+    <SelectedWork />
+  </div>
+  <AboutMe />
+</BaseLayout>
+
+<style is:global>
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(7rem, 0fr);
+    align-items: start;
+    column-gap: var(--space-2);
+    max-width: var(--portfolio-max);
+    margin: 0 auto;
+    padding: 0;
+    transition:
+      grid-template-columns 200ms ease,
+      column-gap 200ms ease;
+  }
+
+  .portfolio-grid.toolkit-open {
+    grid-template-columns: minmax(0, 3fr) minmax(7rem, 2fr);
+    column-gap: var(--space-5);
+  }
+
+  .portfolio-grid > #experience,
+  .portfolio-grid > #toolkit,
+  .portfolio-grid > #projects {
+    min-width: 0;
+  }
+
+  .portfolio-grid > section {
+    padding: 0;
+  }
+
+  .portfolio-grid > #toolkit {
+    align-self: stretch;
+  }
+
+  .portfolio-grid > #projects {
+    grid-column: 1 / -1;
+    padding-top: var(--space-3);
+  }
+
+  #experience,
+  #toolkit,
+  #projects,
+  #about-me,
+  #experience .experience-item,
+  #projects .work-item {
+    border-top: 0;
+    border-bottom: 0;
+  }
+
+  .portfolio-grid section > .page {
+    max-width: none;
+    padding: 0;
+  }
+
+  #about-me {
+    padding: var(--space-3) 0 0;
+  }
+
+  #about-me > .page {
+    padding: 0;
+  }
+
+  @media (max-width: 64rem) {
+    .portfolio-grid {
+      display: block;
+      max-width: none;
+      padding: 0;
+    }
+
+    .portfolio-grid section > .page {
+      max-width: var(--page-max);
+      margin: 0 auto;
+      padding: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .portfolio-grid {
+      transition: none;
+    }
+  }
+</style>

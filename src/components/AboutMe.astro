@@ -13,12 +13,15 @@ import SocialIcon from './SocialIcon.astro';
     <p class="about-me-cta">{aboutMe.cta}</p>
 
     <div class="about-me-links">
-      <a class="btn" href={`mailto:${site.email}`}>Email</a>
-      <a class="btn btn-quiet" href={site.linkedin} target="_blank" rel="noopener noreferrer">
+      <a class="social-link" href={`mailto:${site.email}`}>
+        <SocialIcon name="email" />
+        Email
+      </a>
+      <a class="social-link" href={site.linkedin} target="_blank" rel="noopener noreferrer">
         <SocialIcon name="linkedin" />
         LinkedIn
       </a>
-      <a class="btn btn-quiet" href={site.github} target="_blank" rel="noopener noreferrer">
+      <a class="social-link" href={site.github} target="_blank" rel="noopener noreferrer">
         <SocialIcon name="github" />
         GitHub
       </a>
@@ -36,15 +39,23 @@ import SocialIcon from './SocialIcon.astro';
     max-width: none;
   }
 
-  .about-me-cta {
-    font-size: 1.2rem;
-    font-weight: 500;
-  }
-
   .about-me-links {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-2);
+    column-gap: var(--space-5);
+    row-gap: var(--space-2);
     margin-top: var(--space-3);
+  }
+
+  .about-me-links a {
+    color: var(--color-link);
+    font-size: clamp(1.1rem, 1.5vw, 1.35rem);
+    text-decoration: underline;
+  }
+
+  .social-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
   }
 </style>

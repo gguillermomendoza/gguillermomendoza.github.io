@@ -8,9 +8,6 @@ import { projects } from '../data/projects';
       <h2>Projects</h2>
 
       <div class="carousel-controls" data-carousel-controls>
-        <span class="carousel-status" data-carousel-status aria-live="polite">
-          1&ndash;{Math.min(3, projects.length)} / {projects.length}
-        </span>
         <button class="carousel-button" type="button" data-carousel-previous aria-label="Show previous project">
           &uarr;
         </button>
@@ -39,13 +36,6 @@ import { projects } from '../data/projects';
               <h3>{project.title}</h3>
               <p class="work-problem">{project.problem}</p>
               <p>{project.summary}</p>
-
-              {project.stat && (
-                <p class="stat">
-                  {project.stat}
-                  {project.statCaveat && <span class="stat-caveat"> — {project.statCaveat}</span>}
-                </p>
-              )}
 
               <ul class="tech-list">
                 {project.tech.map((t) => <li>{t}</li>)}
@@ -76,20 +66,13 @@ import { projects } from '../data/projects';
 <style>
   .projects-heading {
     align-items: center;
+    margin-bottom: 0;
   }
 
   .carousel-controls {
     display: flex;
     align-items: center;
     gap: 0.4rem;
-  }
-
-  .carousel-status {
-    min-width: 4.5rem;
-    color: var(--color-text-muted);
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    text-align: right;
   }
 
   .carousel-button {
@@ -195,9 +178,6 @@ import { projects } from '../data/projects';
       --visible-projects: 1;
     }
 
-    .carousel-status {
-      min-width: auto;
-    }
   }
 
 </style>
@@ -207,10 +187,9 @@ import { projects } from '../data/projects';
   const controls = document.querySelector<HTMLElement>('[data-carousel-controls]');
   const previous = controls?.querySelector<HTMLButtonElement>('[data-carousel-previous]');
   const next = controls?.querySelector<HTMLButtonElement>('[data-carousel-next]');
-  const status = controls?.querySelector<HTMLElement>('[data-carousel-status]');
   const items = carousel ? Array.from(carousel.querySelectorAll<HTMLElement>('.work-item')) : [];
 
-  if (carousel && previous && next && status && items.length) {
+  if (carousel && previous && next && items.length) {
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     let currentIndex = 0;
     let step = 0;
@@ -222,7 +201,6 @@ import { projects } from '../data/projects';
       currentIndex = Math.min(Math.max(currentIndex, 0), maxIndex);
       previous.disabled = currentIndex === 0;
       next.disabled = currentIndex === maxIndex;
-      status.textContent = `${currentIndex + 1}\u2013${Math.min(currentIndex + visibleProjects, items.length)} / ${items.length}`;
     };
 
     const setLayout = () => {

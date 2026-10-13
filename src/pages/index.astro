@@ -1,74 +1,102 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Hero from '../components/Hero.astro';
-import Experience from '../components/Experience.astro';
-import SelectedWork from '../components/SelectedWork.astro';
-import Toolkit from '../components/Toolkit.astro';
-import AboutMe from '../components/AboutMe.astro';
+import { projects } from '../data/projects';
+import { site } from '../data/site';
+
+const projectUrls = projects.map((project) => `/projects/${project.slug}/`);
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
-<BaseLayout>
-  <Hero />
-  <div class="portfolio-grid">
-    <Experience />
-    <Toolkit />
-    <SelectedWork />
-  </div>
-  <AboutMe />
-</BaseLayout>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonicalURL} />
+    <title>{site.title}</title>
+    <meta name="description" content={site.description} />
+  </head>
+  <body>
+    <main>
+      <h1>{site.name}</h1>
 
-<style is:global>
-  .portfolio-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
-    align-items: start;
-    column-gap: var(--space-5);
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 var(--space-3);
-    border-bottom: 1px dotted var(--color-border);
+      <nav aria-label="Choose a destination">
+        <a href="/home/">Home</a>
+        <a id="random-project" href="/home/#projects" data-projects={JSON.stringify(projectUrls)}>
+          Random project
+        </a>
+        <a href={site.resumeHref} target="_blank" rel="noopener noreferrer">Resume</a>
+        <a href="/contact/">Contact me</a>
+      </nav>
+    </main>
+
+    <script>
+      const randomLink = document.querySelector<HTMLAnchorElement>('#random-project');
+      const destinations = JSON.parse(randomLink?.dataset.projects ?? '[]') as string[];
+
+      const chooseProject = () => destinations[Math.floor(Math.random() * destinations.length)];
+
+      if (randomLink && destinations.length > 0) {
+        randomLink.href = chooseProject();
+        randomLink.addEventListener('click', () => {
+          randomLink.href = chooseProject();
+        });
+      }
+    </script>
+  </body>
+</html>
+
+<style>
+  :global(*) {
+    box-sizing: border-box;
   }
 
-  .portfolio-grid > #experience,
-  .portfolio-grid > #toolkit,
-  .portfolio-grid > #projects {
-    min-width: 0;
+  :global(html) {
+    background: #fff;
+    color: #000;
+    color-scheme: light;
+    font-family: 'Times New Roman', Times, serif;
   }
 
-  .portfolio-grid > #experience,
-  .portfolio-grid > #toolkit {
-    padding: var(--space-6) 0;
+  :global(body) {
+    margin: 0;
+    padding: clamp(1rem, 2vw, 2rem);
+    font-size: clamp(1.1rem, 1.4vw, 1.3rem);
+    line-height: 1.55;
   }
 
-  .portfolio-grid > #toolkit {
-    align-self: stretch;
+  main {
+    max-width: 58rem;
   }
 
-  .portfolio-grid > #projects {
-    grid-column: 1 / -1;
-    border-bottom: 0;
+  h1 {
+    margin: 0 0 0.35em;
+    font-size: clamp(2.75rem, 7vw, 6.5rem);
+    font-weight: 400;
+    line-height: 0.95;
   }
 
-  .portfolio-grid section > .page {
-    max-width: none;
-    padding: 0;
+  nav {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin-top: 2.5rem;
   }
 
-  @media (max-width: 64rem) {
-    .portfolio-grid {
-      display: block;
-      max-width: none;
-      padding: 0;
-    }
-
-    .portfolio-grid > #projects {
-      border-bottom: 1px dotted var(--color-border);
-    }
-
-    .portfolio-grid section > .page {
-      max-width: var(--page-max);
-      margin: 0 auto;
-      padding: 0 var(--space-3);
-    }
+  a {
+    color: #0000ee;
+    text-decoration: none;
   }
+
+  a:hover,
+  a:focus-visible {
+    text-decoration: underline;
+  }
+
+  a:focus-visible {
+    outline: 2px solid #0000ee;
+    outline-offset: 3px;
+  }
+
 </style>

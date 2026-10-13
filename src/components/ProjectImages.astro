@@ -1,0 +1,75 @@
+---
+import type { ProjectImage } from '../data/projects';
+
+interface Props {
+  images: ProjectImage[];
+}
+
+const { images } = Astro.props;
+---
+
+<div class="project-images">
+  {images.map((image, i) => (
+    <figure>
+      {image.href ? (
+        <a class="project-image-link" href={image.href} target="_blank" rel="noopener noreferrer">
+          <img
+            src={image.src}
+            alt={image.alt}
+            loading="lazy"
+            decoding="async"
+            width={image.width}
+            height={image.height}
+          />
+        </a>
+      ) : (
+        <img
+          src={image.src}
+          alt={image.alt}
+          loading="lazy"
+          decoding="async"
+          width={image.width}
+          height={image.height}
+        />
+      )}
+      <figcaption>fig. {i + 1} &mdash; {image.caption ?? image.alt}</figcaption>
+    </figure>
+  ))}
+</div>
+
+<style>
+  .project-images {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    margin: var(--space-3) 0 var(--space-4);
+  }
+
+  figure {
+    margin: 0;
+  }
+
+  .project-image-link {
+    display: block;
+  }
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--color-border);
+    transition: border-color 150ms ease;
+  }
+
+  .project-image-link:hover img,
+  .project-image-link:focus-visible img {
+    border-color: var(--color-accent);
+  }
+
+  figcaption {
+    margin-top: 0.4rem;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+  }
+</style>

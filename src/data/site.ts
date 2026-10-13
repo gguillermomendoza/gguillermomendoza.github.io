@@ -7,7 +7,7 @@ export const site = {
   title: 'Guillermo Mendoza — Data Science, ML, & Applied AI', 
   description:
     'Portfolio of Guillermo Mendoza: data science, machine learning, and applied AI projects spanning EEG decoding, large-scale data processing, and grounded LLM systems.',
-  email: 'gmendoza@students.pitzer.edu',
+  email: 'guillermomendozafranco@gmail.com',
   github: 'https://github.com/gguillermomendoza',
   githubHandle: 'gguillermomendoza',
   linkedin: 'https://linkedin.com/in/guillermo-mendoza-franco',
@@ -24,6 +24,6 @@ export const hero = {
 export const aboutMe = {
   heading: 'About Me',
   background:
-    "I got into data science through neuroscience. Trying to make sense of noisy EEG recordings led me to statistics and signal processing, and from there to machine learning. I've kept working in those areas since, in lab research and on projects of my own.",
-  cta: "I'm always interested in difficult data problems and teams where I can learn quickly and own meaningful work.",
+    "I got into computational work through neuroscience. Trying to make sense of noisy EEG recordings led me to statistics and signal processing, and from there to machine learning. I've kept working in those areas since, in lab research and on projects of my own.",
+  cta: "I'm always interested in difficult problems and teams where I can learn quickly and own meaningful work.",
 } as const;
