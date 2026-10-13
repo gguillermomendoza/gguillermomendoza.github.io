@@ -3,22 +3,18 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
 import Experience from '../components/Experience.astro';
 import SelectedWork from '../components/SelectedWork.astro';
-import About from '../components/About.astro';
 import Toolkit from '../components/Toolkit.astro';
-import Contact from '../components/Contact.astro';
+import AboutMe from '../components/AboutMe.astro';
 ---
 
 <BaseLayout>
   <Hero />
   <div class="portfolio-grid">
     <Experience />
-    <div class="profile-column">
-      <Toolkit />
-      <About />
-    </div>
+    <Toolkit />
     <SelectedWork />
   </div>
-  <Contact />
+  <AboutMe />
 </BaseLayout>
 
 <style is:global>
@@ -34,29 +30,18 @@ import Contact from '../components/Contact.astro';
   }
 
   .portfolio-grid > #experience,
-  .profile-column,
+  .portfolio-grid > #toolkit,
   .portfolio-grid > #projects {
     min-width: 0;
   }
 
-  .portfolio-grid > #experience {
+  .portfolio-grid > #experience,
+  .portfolio-grid > #toolkit {
     padding: var(--space-6) 0;
   }
 
-  .profile-column > section {
-    padding: 0;
-  }
-
-  .profile-column > section:first-child {
-    padding-top: var(--space-6);
-  }
-
-  .profile-column > section + section {
-    padding-top: var(--space-3);
-  }
-
-  .profile-column > section:last-child {
-    padding-bottom: var(--space-6);
+  .portfolio-grid > #toolkit {
+    align-self: stretch;
   }
 
   .portfolio-grid > #projects {
@@ -77,11 +62,6 @@ import Contact from '../components/Contact.astro';
     }
 
     .portfolio-grid > #projects {
-      border-bottom: 1px dotted var(--color-border);
-    }
-
-    .profile-column > #toolkit {
-      padding-bottom: 0;
       border-bottom: 1px dotted var(--color-border);
     }
 
