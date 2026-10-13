@@ -1,5 +1,6 @@
 ---
 import { site } from '../data/site';
+import SocialIcon from '../components/SocialIcon.astro';
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
@@ -19,15 +20,36 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       <h1>Contact</h1>
 
       <address>
-        <p>Email: <a href={`mailto:${site.email}`}>{site.email}</a></p>
-        <p>LinkedIn: <a href={site.linkedin} target="_blank" rel="noopener noreferrer">Guillermo Mendoza</a></p>
-        <p>GitHub: <a href={site.github} target="_blank" rel="noopener noreferrer">@{site.githubHandle}</a></p>
+        <p>
+          <a class="social-link" href={`mailto:${site.email}`}>
+            <SocialIcon name="email" />
+            {site.email}
+          </a>
+        </p>
+        <p>
+          <a class="social-link" href={site.linkedin} target="_blank" rel="noopener noreferrer">
+            <SocialIcon name="linkedin" />
+            Guillermo Mendoza
+          </a>
+        </p>
+        <p>
+          <a class="social-link" href={site.github} target="_blank" rel="noopener noreferrer">
+            <SocialIcon name="github" />
+            @{site.githubHandle}
+          </a>
+        </p>
       </address>
 
-      <nav aria-label="Return to landing page">
-        <a href="/">Back</a>
+      <nav aria-label="Return to previous page">
+        <button class="back-button" id="back-button" type="button">Back</button>
       </nav>
     </main>
+
+    <script>
+      document.querySelector<HTMLButtonElement>('#back-button')?.addEventListener('click', () => {
+        history.back();
+      });
+    </script>
   </body>
 </html>
 
@@ -72,21 +94,39 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     margin: 0;
   }
 
+  .social-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
   nav {
     margin-top: 2.5rem;
   }
 
-  a {
+  a,
+  .back-button {
     color: #0000ee;
     text-decoration: none;
   }
 
+  .back-button {
+    padding: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    cursor: pointer;
+  }
+
   a:hover,
-  a:focus-visible {
+  a:focus-visible,
+  .back-button:hover,
+  .back-button:focus-visible {
     text-decoration: underline;
   }
 
-  a:focus-visible {
+  a:focus-visible,
+  .back-button:focus-visible {
     outline: 2px solid #0000ee;
     outline-offset: 3px;
   }

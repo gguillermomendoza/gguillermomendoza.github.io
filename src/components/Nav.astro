@@ -1,6 +1,5 @@
 ---
 import { site } from '../data/site';
-import SocialIcon from './SocialIcon.astro';
 
 const navLinks = [
   { label: 'Experience', href: '/home/#experience' },
@@ -24,24 +23,7 @@ const navLinks = [
           <li><a class="nav-link" href={link.href}>{link.label}</a></li>
         ))}
         <li><a class="nav-link" href={site.resumeHref} target="_blank" rel="noopener noreferrer">Resume</a></li>
-        <li>
-          <a class="nav-link social-link" href={`mailto:${site.email}`}>
-            <SocialIcon name="email" />
-            Email me
-          </a>
-        </li>
-        <li>
-          <a class="nav-link social-link" href={site.github} target="_blank" rel="noopener noreferrer">
-            <SocialIcon name="github" />
-            GitHub
-          </a>
-        </li>
-        <li>
-          <a class="nav-link social-link" href={site.linkedin} target="_blank" rel="noopener noreferrer">
-            <SocialIcon name="linkedin" />
-            LinkedIn
-          </a>
-        </li>
+        <li><a class="nav-link" href="/contact/">Contact</a></li>
       </ul>
     </nav>
   </div>
@@ -103,12 +85,6 @@ const navLinks = [
 
   .nav-link {
     color: var(--color-link);
-  }
-
-  .social-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
   }
 
   .nav-toggle {
